@@ -907,9 +907,11 @@ function xhprof_param_init($params) {
       exit();
     }
 
-    if ($k === 'run') {
-      $p = implode(',', array_filter(explode(',', $p), 'ctype_xdigit'));
-    }
+if ($k === 'run') {
+    $p = implode(',', array_filter(explode(',', $p), function ($s) {
+        return preg_match('/^[A-Za-z0-9_-]+$/', $s);
+    }));
+}
 
     if ($k == 'symbol') {
         $p = strip_tags($p);
